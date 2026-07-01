@@ -10,13 +10,20 @@ const terminalVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 1.4, delayChildren: 0.2 },
+    transition: {
+      staggerChildren: 1.4, // Matches 1.4s per line
+      delayChildren: 0.2,
+    },
   },
 }
 
 const lineVariants = {
-  hidden: { opacity: 0, x: -10, display: 'none' },
-  visible: { opacity: 1, x: 0, display: 'block', transition: { duration: 0.2, ease: 'easeOut' } },
+  hidden: { opacity: 0, x: -10 },
+  visible: { 
+    opacity: 1, 
+    x: 0, 
+    transition: { duration: 0.3, ease: 'easeOut' }
+  },
 }
 
 export default function About() {
@@ -30,7 +37,7 @@ export default function About() {
       if (audioRef.current) {
         audioRef.current.currentTime = 0
         audioRef.current.volume = 0.5
-        audioRef.current.play().catch(e => console.log("Audio blocked:", e))
+        audioRef.current.play().catch(e => console.log("Audio play blocked:", e))
       }
     }
   }
@@ -48,7 +55,6 @@ export default function About() {
         </ScrollReveal>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Text and Stats Section */}
           <ScrollReveal className="space-y-6">
             <p className="text-gray-400 text-lg leading-relaxed">
               Hey, I'm <span className="text-white font-semibold">Tenzing Norkay Sherpa</span> — a full-stack developer with a builder's obsession. I don't just write code; I architect solutions that scale.
@@ -56,7 +62,7 @@ export default function About() {
             <p className="text-gray-400 text-lg leading-relaxed">
               By day I'm working on Front-End speed. By night I'm deep in my startup, building tools that help dev teams move faster without burning out.
             </p>
-            
+
             <div ref={statsRef} className="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-neon-cyan/15">
               <div className="neon-border p-4">
                 <div className="text-3xl font-bold text-neon-cyan mb-2">{statsInView && <CountUp end={2} duration={2} />}+</div>
@@ -73,9 +79,10 @@ export default function About() {
             </div>
           </ScrollReveal>
 
-          {/* Terminal Section */}
           <ScrollReveal delay={200}>
+            {/* Audio path updated to root public folder */}
             <audio ref={audioRef} src="/typing-sound.mp3" preload="auto" />
+            
             <div className="terminal rounded-lg overflow-hidden border border-neon-cyan/20 bg-dark-800 shadow-[0_0_30px_rgba(0,245,255,0.05)]">
               <div className="terminal-header p-4 border-b border-white/10 bg-dark-900 flex items-center justify-between">
                 <div className="flex gap-2">
@@ -89,16 +96,29 @@ export default function About() {
                   </button>
                 )}
               </div>
+              
               <motion.div 
                 className="terminal-body space-y-2 text-sm p-6 font-mono text-gray-300 min-h-[350px]"
                 variants={terminalVariants}
                 initial="hidden"
                 animate={isRunning ? "visible" : "hidden"}
               >
-                <motion.div variants={lineVariants} className="t-comment"><span className="text-neon-pink">const</span> <span className="text-white">tenzing</span> = {'{'}</motion.div>
-                {/* ... Add your other lines here ... */}
-                <motion.div variants={lineVariants} className="t-comment pt-2">
+                <motion.div variants={lineVariants}><span className="text-neon-pink">const</span> <span className="text-white">tenzing</span> = {'{'}</motion.div>
+                <motion.div variants={lineVariants} className="ml-4"><span className="text-neon-cyan">role</span>: <span className="text-green-400">"Fullstack Dev & Founder"</span>,</motion.div>
+                <motion.div variants={lineVariants} className="ml-4"><span className="text-neon-cyan">stack</span>: [</motion.div>
+                <motion.div variants={lineVariants} className="ml-8"><span className="text-green-400">"React"</span>, <span className="text-green-400">"Node.js"</span>, <span className="text-green-400">"Go"</span>,</motion.div>
+                <motion.div variants={lineVariants} className="ml-8"><span className="text-green-400">"TypeScript"</span>, <span className="text-green-400">"Three.js"</span></motion.div>
+                <motion.div variants={lineVariants} className="ml-4">],</motion.div>
+                <motion.div variants={lineVariants} className="ml-4"><span className="text-neon-cyan">startup</span>: <span className="text-green-400">"stealth mode 🚀"</span>,</motion.div>
+                <motion.div variants={lineVariants} className="ml-4"><span className="text-neon-cyan">passion</span>: [</motion.div>
+                <motion.div variants={lineVariants} className="ml-8"><span className="text-green-400">"performance"</span>,</motion.div>
+                <motion.div variants={lineVariants} className="ml-8"><span className="text-green-400">"clean architecture"</span>,</motion.div>
+                <motion.div variants={lineVariants} className="ml-8"><span className="text-green-400">"shipping fast"</span></motion.div>
+                <motion.div variants={lineVariants} className="ml-4">],</motion.div>
+                <motion.div variants={lineVariants}>{'}'};</motion.div>
+                <motion.div variants={lineVariants} className="mt-4 pt-2 border-t border-white/5">
                   <span className="text-neon-violet">TNS</span>.<span className="text-neon-cyan">build</span>()
+                  <motion.span animate={{ opacity: [1, 0, 1] }} transition={{ repeat: Infinity, duration: 0.8 }} className="inline-block w-2 h-4 bg-neon-cyan align-middle ml-1" />
                 </motion.div>
               </motion.div>
             </div>
