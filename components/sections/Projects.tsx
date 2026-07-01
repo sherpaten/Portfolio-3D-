@@ -20,7 +20,7 @@ const projectsData: ProjectData[] = [
   {
     title: 'Online Business',
     description: 'My online software business and web design agency platform.',
-    image: '/Assets/My-Startup.png', // Correct
+    image: '/My-Startup.png',
     featured: true,
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Node.js'],
     links: [{ label: 'Visit Site', href: 'https://designwebsite.shop/' }],
@@ -28,30 +28,28 @@ const projectsData: ProjectData[] = [
   {
     title: 'Plumbing Services Platform',
     description: 'A dedicated client-based web application for an on-demand plumbing business.',
-    image: '/Assets/Plumbing.png', // Correct
+    image: '/Plumbing.png',
     stack: ['React', 'Tailwind CSS', 'Client Delivery'],
     links: [{ label: 'Coming Soon', href: '#' }],
   },
   {
     title: 'Shamu Client Portal',
     description: 'A custom client-based project tailored to specific business requirements.',
-    image: '/Assets/Shamu.png', // Correct
+    image: '/Shamu.png',
     stack: ['React', 'Vite', 'Node.js', 'PostgreSQL'],
     links: [{ label: 'Coming Soon', href: '#' }],
   },
   {
     title: 'University Group Project',
-    description: 'A collaborative full-stack application for university assessment.',
-    // UPDATED: Changed .jpeg to match your file name exactly
-    image: '/Assets/Uni project.jpeg', 
+    description: 'A collaborative full-stack application developed for a higher education university assessment.',
+    image: '/Uni project.jpeg',
     stack: ['React', 'JavaScript', 'HTML', 'Tailwind CSS'],
     links: [{ label: 'GitHub', href: '#' }],
   },
   {
     title: 'E-Learning Demo',
     description: 'A demonstration project showcasing interactive e-learning capabilities.',
-    // UPDATED: Changed .jpeg to match your file name exactly
-    image: '/Assets/E-Learning.jpeg', 
+    image: '/E-Learning.jpeg',
     stack: ['React', 'TypeScript', 'Tailwind CSS'],
     links: [{ label: 'Live demo', href: '#' }, { label: 'GitHub', href: '#' }],
   },

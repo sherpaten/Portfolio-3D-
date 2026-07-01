@@ -48,12 +48,10 @@ export default function Hero() {
       
       {/* 3D Visuals Container */}
       <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-full md:w-1/2 h-full flex items-center justify-center pointer-events-none">
-        {/* Orbs stay behind (z-0) */}
         <div className="absolute z-0">
           <FloatingOrbs />
         </div>
         
-        {/* Profile Picture stays in front (z-20) */}
         <motion.div
           className="absolute z-20 pointer-events-auto cursor-crosshair"
           style={{ perspective: 1000 }}
@@ -68,7 +66,7 @@ export default function Hero() {
             className="w-64 h-64 md:w-[320px] md:h-[320px] rounded-full overflow-hidden border-2 border-neon-cyan/30 shadow-[0_0_40px_rgba(0,245,255,0.2)]"
           >
             <Image
-              src="/Assets/profile-image.png"
+              src="/profile-image.png"
               alt="Profile Picture"
               width={320}
               height={320}
@@ -79,7 +77,6 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Content remains unchanged */}
       <motion.div className="relative z-10 max-w-3xl mx-auto w-full" variants={containerVariants} initial="hidden" animate="visible">
         <motion.p variants={itemVariants} className="text-neon-cyan font-mono text-xs uppercase tracking-widest mb-6">
           ▶ Building the future, one commit at a time
@@ -89,7 +86,6 @@ export default function Hero() {
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-neon-violet to-neon-pink">Developer</span><br />
           <span className="text-gray-400">&amp; Founder</span>
         </motion.h1>
-        {/* ... (keep existing buttons and scroll indicator) ... */}
       </motion.div>
     </section>
   )

@@ -51,14 +51,13 @@ export default function Navbar() {
           {/* Logo size set to 12 (48px) and centered */}
           <div className="relative w-12 h-12">
             <Image 
-              src="/Assets/logo.png" 
+              src="/logo.png" // Updated: Removed /Assets/ to match your new root public structure
               alt="TNS Logo" 
               fill
               className="object-contain"
             />
           </div>
           
-          {/* Increased font size to xl and weight to extrabold/bold */}
           <span className="font-mono tracking-widest flex items-center">
             <span className="text-white font-extrabold text-xl drop-shadow-[0_0_2px_rgba(255,255,255,0.8)]">
               TNS
