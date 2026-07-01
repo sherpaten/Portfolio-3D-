@@ -44,14 +44,17 @@ const projectsData: ProjectData[] = [
     description: 'A collaborative full-stack application developed for a higher education university assessment.',
     image: '/Uni project.jpeg',
     stack: ['React', 'JavaScript', 'HTML', 'Tailwind CSS'],
-    links: [{ label: 'GitHub', href: '#' }],
+    links: [{ label: 'GitHub', href: 'https://github.com/sherpaten' }],
   },
   {
     title: 'E-Learning Demo',
     description: 'A demonstration project showcasing interactive e-learning capabilities.',
     image: '/E-Learning.jpeg',
     stack: ['React', 'TypeScript', 'Tailwind CSS'],
-    links: [{ label: 'Live demo', href: '#' }, { label: 'GitHub', href: '#' }],
+    links: [
+      { label: 'Live demo', href: '#' }, 
+      { label: 'GitHub', href: 'https://github.com/sherpaten' }
+    ],
   },
 ]
 
@@ -71,7 +74,6 @@ function ProjectCard({ project, index }: ProjectCardProps) {
         }`}
         whileHover={{ y: -8 }}
       >
-        {/* Featured Badge */}
         {project.featured && (
           <div className="absolute top-4 right-4 z-20">
             <span className="inline-block px-3 py-1 bg-neon-cyan/10 border border-neon-cyan/30 text-neon-cyan text-xs font-mono uppercase tracking-widest rounded backdrop-blur-md">
@@ -80,7 +82,6 @@ function ProjectCard({ project, index }: ProjectCardProps) {
           </div>
         )}
 
-        {/* Preview with Actual Image */}
         <div className="h-56 relative overflow-hidden flex items-center justify-center bg-dark-700">
           <Image
             src={project.image}
@@ -88,12 +89,9 @@ function ProjectCard({ project, index }: ProjectCardProps) {
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
-          
-          {/* Gradient overlay to ensure text readability if needed, and add styling */}
           <div className="absolute inset-0 bg-gradient-to-t from-dark-800 via-dark-800/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
         </div>
 
-        {/* Content */}
         <div className="p-6 bg-dark-800/90 backdrop-blur-sm relative z-10 border-t border-white/5">
           <h3 className="text-xl font-bold mb-3 text-white group-hover:text-neon-cyan transition-colors">
             {project.title}
@@ -103,7 +101,6 @@ function ProjectCard({ project, index }: ProjectCardProps) {
             {project.description}
           </p>
 
-          {/* Stack */}
           <div className="flex flex-wrap gap-2 mb-4">
             {project.stack.map((tech) => (
               <span
@@ -115,14 +112,13 @@ function ProjectCard({ project, index }: ProjectCardProps) {
             ))}
           </div>
 
-          {/* Links */}
           <div className="flex gap-4 pt-4 border-t border-neon-cyan/10">
             {project.links.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                target={link.href !== '#' ? "_blank" : "_self"}
-                rel={link.href !== '#' ? "noopener noreferrer" : ""}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-sm text-gray-400 hover:text-neon-cyan transition-colors group/link interactive cursor-none flex items-center gap-1"
               >
                 {link.label}
@@ -138,27 +134,17 @@ function ProjectCard({ project, index }: ProjectCardProps) {
 
 export default function Projects() {
   return (
-    <section
-      id="projects"
-      className="relative py-24 px-6 md:px-12 overflow-hidden"
-    >
+    <section id="projects" className="relative py-24 px-6 md:px-12 overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
         <ScrollReveal className="mb-16">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-neon-cyan font-mono text-xs uppercase tracking-widest">
-              03 ─ Work
-            </span>
+            <span className="text-neon-cyan font-mono text-xs uppercase tracking-widest">03 ─ Work</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold">
-            Selected{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-pink to-neon-cyan">
-              Projects
-            </span>
+            Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-pink to-neon-cyan">Projects</span>
           </h2>
         </ScrollReveal>
 
-        {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projectsData.map((project, index) => (
             <ProjectCard key={project.title} project={project} index={index} />
