@@ -38,35 +38,33 @@ export default function Hero() {
     y.set(yPct)
   }
 
-  const handleMouseLeave = () => {
-    x.set(0)
-    y.set(0)
-  }
-
   return (
     <section id="hero" className="relative min-h-screen w-full flex items-center justify-center pt-20 pb-10 px-6 md:px-12 overflow-hidden">
       
       <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-full md:w-1/2 h-full flex items-center justify-center pointer-events-none">
         <div className="absolute z-0"><FloatingOrbs /></div>
         
+        {/* Animated Wrapper for Profile Image */}
         <motion.div
-          className="absolute z-20 pointer-events-auto cursor-crosshair"
+          className="relative z-20 pointer-events-auto cursor-crosshair w-64 h-64 md:w-[320px] md:h-[320px] rounded-full p-1 animate-pulse-glow"
           style={{ perspective: 1000 }}
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 1 }}
           onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
+          onMouseLeave={() => { x.set(0); y.set(0); }}
         >
+          {/* Rotating Border */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-neon-cyan via-transparent to-neon-violet animate-spin-slow rounded-full" />
+          
           <motion.div
             style={{ rotateX, rotateY, translateX, translateY, transformStyle: "preserve-3d" }}
-            className="w-64 h-64 md:w-[320px] md:h-[320px] rounded-full overflow-hidden border-4 border-neon-cyan/50 shadow-[0_0_50px_rgba(0,245,255,0.4)]"
+            className="relative w-full h-full rounded-full overflow-hidden bg-dark-900 border-2 border-dark-900"
           >
             <Image
               src="/profile-image.png"
               alt="Profile Picture"
-              width={320}
-              height={320}
+              fill
               className="object-cover pointer-events-none"
               priority
             />
