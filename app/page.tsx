@@ -43,27 +43,37 @@ export default function Home() {
     return () => lenis.destroy()
   }, [])
 
-  return (
-    <main className="relative w-full min-h-screen bg-dark-900">
-      {/* Background */}
-      <ParticleBackground />
+ return (
+  <main className="relative w-full min-h-screen bg-dark-900">
+    <ParticleBackground />
+    <CustomCursor />
 
-      {/* Custom Cursor */}
-      <CustomCursor />
-
-      {/* Content */}
-      <Navbar />
-      <Hero />
+    <Navbar />
+    <Hero />
+    
+    {/* Wrap the sections you want to animate */}
+    <ScrollReveal>
       <About />
-      <Skills />
-      <Projects />
-      <Contact />
-      <Footer />
+    </ScrollReveal>
 
-      {/* Loading bar */}
-      {isLoading && (
-        <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-neon-cyan via-neon-violet to-neon-pink z-50 animate-pulse" />
-      )}
-    </main>
+    <ScrollReveal>
+      <Skills />
+    </ScrollReveal>
+
+    <ScrollReveal>
+      <Projects />
+    </ScrollReveal>
+
+    <ScrollReveal>
+      <Contact />
+    </ScrollReveal>
+
+    <Footer />
+
+    {isLoading && (
+      <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-neon-cyan via-neon-violet to-neon-pink z-50 animate-pulse" />
+    )}
+  </main>
+)
   )
 }

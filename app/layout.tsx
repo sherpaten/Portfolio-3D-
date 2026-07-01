@@ -8,11 +8,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    
     siteName: 'TNS Dev Portfolio',
   },
+  // Add this part:
+  twitter: {
+    card: 'summary_large_image',
+    title: 'TNS Dev - Full-Stack Developer & Founder',
+    description: 'High-performance digital products. Full-stack developer building the future.',
+  },
 }
-
 export default function RootLayout({
   children,
 }: {
