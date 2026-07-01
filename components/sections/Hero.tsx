@@ -46,11 +46,8 @@ export default function Hero() {
   return (
     <section id="hero" className="relative min-h-screen w-full flex items-center justify-center pt-20 pb-10 px-6 md:px-12 overflow-hidden">
       
-      {/* 3D Visuals Container */}
       <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-full md:w-1/2 h-full flex items-center justify-center pointer-events-none">
-        <div className="absolute z-0">
-          <FloatingOrbs />
-        </div>
+        <div className="absolute z-0"><FloatingOrbs /></div>
         
         <motion.div
           className="absolute z-20 pointer-events-auto cursor-crosshair"
@@ -63,9 +60,8 @@ export default function Hero() {
         >
           <motion.div
             style={{ rotateX, rotateY, translateX, translateY, transformStyle: "preserve-3d" }}
-            className="w-64 h-64 md:w-[320px] md:h-[320px] rounded-full overflow-hidden border-2 border-neon-cyan/30 shadow-[0_0_40px_rgba(0,245,255,0.2)]"
+            className="w-64 h-64 md:w-[320px] md:h-[320px] rounded-full overflow-hidden border-4 border-neon-cyan/50 shadow-[0_0_50px_rgba(0,245,255,0.4)]"
           >
-            {/* Corrected path: File is now at the root of public/ */}
             <Image
               src="/profile-image.png"
               alt="Profile Picture"
@@ -78,13 +74,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Hero Text Content */}
-      <motion.div 
-        className="relative z-10 max-w-3xl mx-auto w-full" 
-        variants={containerVariants} 
-        initial="hidden" 
-        animate="visible"
-      >
+      <motion.div className="relative z-10 max-w-3xl mx-auto w-full" variants={containerVariants} initial="hidden" animate="visible">
         <motion.p variants={itemVariants} className="text-neon-cyan font-mono text-xs uppercase tracking-widest mb-6">
           ▶ Building the future, one commit at a time
         </motion.p>
@@ -93,9 +83,13 @@ export default function Hero() {
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-neon-violet to-neon-pink">Developer</span><br />
           <span className="text-gray-400">&amp; Founder</span>
         </motion.h1>
-        <motion.div variants={itemVariants} className="flex gap-4">
-          <a href="#projects" className="btn-neon-outline px-8 py-3 rounded border border-neon-cyan text-neon-cyan hover:bg-neon-cyan/10 transition-colors">
+        
+        <motion.div variants={itemVariants} className="flex gap-4 mt-8">
+          <a href="#projects" className="px-8 py-3 rounded border border-neon-cyan text-neon-cyan hover:bg-neon-cyan/10 transition-colors">
             View Work
+          </a>
+          <a href="#contact" className="px-8 py-3 rounded border border-white text-white hover:bg-white hover:text-dark-900 transition-colors">
+            Get in Touch
           </a>
         </motion.div>
       </motion.div>
