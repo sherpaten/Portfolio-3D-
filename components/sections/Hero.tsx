@@ -67,7 +67,7 @@ export default function Hero() {
           
           <div className="relative w-full h-full rounded-full overflow-hidden bg-dark-900 border-4 border-dark-900">
             <Image 
-              src="/profile-image.png" 
+              src="/profile.png" 
               alt="Profile Picture" 
               fill 
               className="object-cover" 
