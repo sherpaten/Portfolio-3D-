@@ -245,12 +245,11 @@ export default function Contact() {
         {/* DIRECT EMAIL SECTION */}
         <ScrollReveal delay={300} className="text-center mt-8">
           <p className="text-gray-500 font-mono text-sm">
-            Or reach me directly:{' '}
-            
+           Or reach me directly:{' '}
+            <a
               href="mailto:kudoten55@gmail.com"
               className="text-neon-cyan hover:text-neon-violet transition-colors interactive cursor-none"
-              aria-label="Email Tenzing Sherpa"
-            <a>
+            >
               kudoten55@gmail.com
             </a>
           </p>
