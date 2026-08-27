@@ -3,12 +3,7 @@
 import { useEffect, useRef } from 'react'
 
 interface Particle {
-  x: number
-  y: number
-  vx: number
-  vy: number
-  size: number
-  opacity: number
+  x: number; y: number; vx: number; vy: number; size: number; opacity: number;
 }
 
 export default function ParticleBackground() {
@@ -17,7 +12,6 @@ export default function ParticleBackground() {
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
@@ -25,10 +19,18 @@ export default function ParticleBackground() {
     canvas.height = window.innerHeight
 
     const particles: Particle[] = []
-    const particleCount = 80
+    // Reduced particle count slightly for better mobile performance
+    const particleCount = window.innerWidth < 768 ? 40 : 80 
     const maxDistance = 120
+    let animationFrameId: number
+    let isVisible = true
 
-    // Initialize particles
+    // Only render when the canvas is actually in the viewport
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting
+    })
+    observer.observe(canvas)
+
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -41,15 +43,17 @@ export default function ParticleBackground() {
     }
 
     const drawParticles = () => {
+      if (!isVisible) {
+        animationFrameId = requestAnimationFrame(drawParticles)
+        return // Skip heavy math if off-screen
+      }
+
       ctx.fillStyle = '#020408'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      // Draw particles
       particles.forEach((particle) => {
         particle.x += particle.vx
         particle.y += particle.vy
-
-        // Wrap around edges
         if (particle.x < 0) particle.x = canvas.width
         if (particle.x > canvas.width) particle.x = 0
         if (particle.y < 0) particle.y = canvas.height
@@ -61,7 +65,6 @@ export default function ParticleBackground() {
         ctx.fill()
       })
 
-      // Draw connections
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x
@@ -78,8 +81,7 @@ export default function ParticleBackground() {
           }
         }
       }
-
-      requestAnimationFrame(drawParticles)
+      animationFrameId = requestAnimationFrame(drawParticles)
     }
 
     drawParticles()
@@ -90,13 +92,12 @@ export default function ParticleBackground() {
     }
 
     window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      cancelAnimationFrame(animationFrameId)
+      observer.disconnect()
+    }
   }, [])
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full z-0 opacity-60"
-    />
-  )
+  return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full z-0 opacity-60" />
 }

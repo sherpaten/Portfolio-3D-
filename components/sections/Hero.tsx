@@ -2,15 +2,15 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import FloatingOrbs from '@/components/3d/FloatingOrbs'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
+
+// Prevents 3D Orbs from blocking the main thread text render
+const FloatingOrbs = dynamic(() => import('@/components/3d/FloatingOrbs'), { ssr: false })
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { 
-    opacity: 1, 
-    transition: { staggerChildren: 0.2, delayChildren: 0.3 } 
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.2, delayChildren: 0.3 } },
 }
 
 const itemVariants = {
@@ -20,18 +20,9 @@ const itemVariants = {
 
 export default function Hero() {
   return (
-    <section 
-      id="hero" 
-      className="relative min-h-screen w-full flex flex-col md:flex-row items-center justify-between pt-24 pb-10 px-6 md:px-20 overflow-hidden"
-    >
+    <section id="hero" className="relative min-h-screen w-full flex flex-col md:flex-row items-center justify-between pt-24 pb-10 px-6 md:px-20 overflow-hidden">
       
-      {/* Text Content - Always on the Left on Desktop */}
-      <motion.div 
-        className="w-full md:w-1/2 z-10 text-center md:text-left mb-12 md:mb-0" 
-        variants={containerVariants} 
-        initial="hidden" 
-        animate="visible"
-      >
+      <motion.div className="w-full md:w-1/2 z-10 text-center md:text-left mb-12 md:mb-0" variants={containerVariants} initial="hidden" animate="visible">
         <motion.p variants={itemVariants} className="text-neon-cyan font-mono text-xs uppercase tracking-widest mb-6">
           ▶ Building the future, one commit at a time
         </motion.p>
@@ -54,15 +45,11 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Profile Image - Always on the Right on Desktop */}
       <div className="w-full md:w-1/2 flex justify-center md:justify-end z-10">
         <motion.div 
           className="relative w-64 h-64 md:w-96 md:h-96 rounded-full p-2 animate-pulse-glow"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.5 }}
         >
-          {/* Rotating Border */}
           <div className="absolute inset-0 bg-gradient-to-tr from-neon-cyan via-transparent to-neon-violet animate-spin-slow rounded-full" />
           
           <div className="relative w-full h-full rounded-full overflow-hidden bg-dark-900 border-4 border-dark-900">
@@ -70,6 +57,7 @@ export default function Hero() {
               src="/profile.png" 
               alt="Profile Picture" 
               fill 
+              sizes="(max-width: 768px) 256px, 384px"
               className="object-cover" 
               priority 
             />
@@ -77,7 +65,6 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Background Orbs */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
         <FloatingOrbs />
       </div>
