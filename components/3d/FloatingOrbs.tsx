@@ -2,9 +2,8 @@
 
 import { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { PerspectiveCamera, Sphere } from '@react-three/drei'
-import { Mesh } from 'three'
-import * as THREE from 'three'
+import { PerspectiveCamera } from '@react-three/drei'
+import type { Mesh } from 'three'
 
 interface OrbProps {
   position: [number, number, number]
@@ -15,42 +14,32 @@ interface OrbProps {
 
 function Orb({ position, color, size, speed }: OrbProps) {
   const meshRef = useRef<Mesh>(null)
-  const rotationRef = useRef({ x: 0, y: 0, z: 0 })
+  const initialY = position[1]
 
-  useFrame(() => {
-    if (meshRef.current) {
-      rotationRef.current.x += 0.0005 * speed
-      rotationRef.current.y += 0.0008 * speed
-      rotationRef.current.z += 0.0003 * speed
+  useFrame(({ clock }) => {
+    const mesh = meshRef.current
+    if (!mesh) return
 
-      meshRef.current.rotation.x = rotationRef.current.x
-      meshRef.current.rotation.y = rotationRef.current.y
-      meshRef.current.rotation.z = rotationRef.current.z
-
-      meshRef.current.position.y += Math.sin(Date.now() * 0.001 * speed) * 0.0008
-    }
+    const time = clock.elapsedTime * speed
+    mesh.rotation.x = time * 0.05
+    mesh.rotation.y = time * 0.08
+    mesh.rotation.z = time * 0.03
+    // Set position from a stable baseline instead of accumulating tiny movements.
+    mesh.position.y = initialY + Math.sin(time) * 0.08
   })
 
   return (
     <mesh ref={meshRef} position={position}>
-      <icosahedronGeometry args={[size, 16]} />
+      <icosahedronGeometry args={[size, 3]} />
       <meshPhongMaterial
         color={color}
         emissive={color}
-        emissiveIntensity={0.8}
-        wireframe={false}
+        emissiveIntensity={0.55}
         fog={false}
       />
-
-      {/* Glow layer */}
-      <mesh scale={[1.2, 1.2, 1.2]}>
-        <icosahedronGeometry args={[size, 16]} />
-        <meshBasicMaterial
-          color={color}
-          transparent={true}
-          opacity={0.15}
-          fog={false}
-        />
+      <mesh scale={1.12}>
+        <icosahedronGeometry args={[size, 2]} />
+        <meshBasicMaterial color={color} transparent opacity={0.1} fog={false} />
       </mesh>
     </mesh>
   )
@@ -61,25 +50,15 @@ function OrbScene() {
     <>
       <PerspectiveCamera makeDefault position={[0, 0, 8]} />
       <color attach="background" args={['#020408']} />
-
-      {/* Lighting */}
-      <ambientLight intensity={0.4} />
-      <pointLight position={[10, 10, 10]} intensity={1} color="#00f5ff" />
-      <pointLight position={[-10, -10, 5]} intensity={0.8} color="#bf00ff" />
-
-      {/* Orbs */}
+      <ambientLight intensity={0.45} />
+      <pointLight position={[10, 10, 10]} intensity={0.8} color="#00f5ff" />
+      <pointLight position={[-10, -10, 5]} intensity={0.6} color="#bf00ff" />
       <Orb position={[0, 0, 0]} color="#00f5ff" size={1.5} speed={1} />
       <Orb position={[3, 2, -2]} color="#bf00ff" size={0.8} speed={1.2} />
       <Orb position={[-2.5, -1.5, -3]} color="#ff006e" size={0.6} speed={0.9} />
-
-      {/* Grid background */}
       <mesh position={[0, 0, -5]}>
         <planeGeometry args={[20, 20]} />
-        <meshBasicMaterial
-          color="#0a1628"
-          transparent={true}
-          opacity={0.1}
-        />
+        <meshBasicMaterial color="#0a1628" transparent opacity={0.1} />
       </mesh>
     </>
   )
@@ -87,8 +66,13 @@ function OrbScene() {
 
 export default function FloatingOrbs() {
   return (
-    <div className="w-full h-full">
-      <Canvas>
+    <div className="w-full h-full" aria-hidden="true">
+      <Canvas
+        dpr={[1, 1.35]}
+        frameloop="always"
+        gl={{ antialias: false, powerPreference: 'low-power', alpha: false }}
+        camera={{ position: [0, 0, 8] }}
+      >
         <OrbScene />
       </Canvas>
     </div>
